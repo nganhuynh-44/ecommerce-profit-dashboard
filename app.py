@@ -12,7 +12,7 @@ from sklearn.cluster import KMeans
 # 0. PAGE CONFIG
 # ============================================================
 st.set_page_config(
-    page_title="E-Commerce Profit Decision Dashboard",
+    page_title="E-Commerce Profit Overview Dashboard",
     page_icon="📊",
     layout="wide"
 )
@@ -211,7 +211,7 @@ def train_model(data):
 st.sidebar.header("Dashboard Navigation")
 
 page = st.sidebar.radio(
-    "Chọn nội dung",
+    "Display options",
     [
         "Overview",
         "Discount Analysis",
@@ -223,9 +223,7 @@ page = st.sidebar.radio(
 
 st.sidebar.divider()
 st.sidebar.info(
-    "Lưu ý: Profit Simulator là công cụ hỗ trợ ra quyết định dựa trên "
-    "mô hình Random Forest. Kết quả dự báo không được diễn giải là tác động "
-    "nhân quả của Discount."
+    "Note: The Profit Simulator is a decision-support tool based on the Random Forest model. The projected results do not account for the impact of price discounts."
 )
 
 # ============================================================
@@ -235,7 +233,7 @@ if page == "Overview":
 
     st.header("1. Executive Overview")
     st.write(
-        "Trang tổng quan trả lời câu hỏi: **Hoạt động kinh doanh đang diễn ra như thế nào?**"
+        "The dashboard answers the question: How is the business performing?**"
     )
 
     total_sales = df["Sales"].sum()
@@ -301,7 +299,7 @@ elif page == "Discount Analysis":
 
     st.header("2. Discount Analysis")
     st.write(
-        "Trang này tập trung vào mối quan hệ giữa mức Discount và hiệu quả lợi nhuận."
+        "This page focuses on the relationship between the discount level and profitability."
     )
 
     discount_summary = (
@@ -388,10 +386,10 @@ elif page == "Discount Analysis":
 
     if high_discount["Profit"] < 0:
         st.warning(
-            f"Discount >30% tạo Sales {money(high_discount['Sales'])} nhưng "
-            f"Profit âm {money(high_discount['Profit'])}, với Profit Margin "
+            f"Discount exceeding >30% generated Sales of {money(high_discount['Sales'])} but "
+            f"resulted in a negative profit of  {money(high_discount['Profit'])}, with Profit Margin "
             f"{pct(high_discount['Profit Margin'])}. "
-            "Đây là tín hiệu cần kiểm soát khi thiết kế chính sách giảm giá."
+            "This is a critical factor to monitor when formulating discount policies."
         )
 
     corr_discount_profit = order_df["Avg_Discount"].corr(
@@ -406,8 +404,8 @@ elif page == "Discount Analysis":
     c2.metric("Discount ↔ Quantity correlation", f"{corr_discount_quantity:.4f}")
 
     st.caption(
-        "Correlation chỉ phản ánh mối liên hệ trong dữ liệu quan sát; "
-        "không chứng minh quan hệ nhân quả."
+        "Correlation only reflects a relationship within observed data; "
+        "it does not prove a causal relationship."
     )
 
 # ============================================================
@@ -417,8 +415,7 @@ elif page == "Customer Segmentation":
 
     st.header("3. Customer Segmentation")
     st.write(
-        "Phân nhóm khách hàng để nhận diện nhóm tạo giá trị cao, nhóm có mức "
-        "discount cao và nhóm có hiệu quả lợi nhuận thấp."
+        "Segment customers to identify high-value groups, groups with high discount levels, and groups with low profitability."
     )
 
     scaler = StandardScaler()
@@ -468,7 +465,7 @@ elif page == "Customer Segmentation":
     )
 
     selected_cluster = st.selectbox(
-        "Chọn Cluster",
+        "Choose Cluster",
         sorted(customer_clustered["Cluster"].unique())
     )
 
@@ -508,7 +505,7 @@ elif page == "Customer Segmentation":
     )
 
     st.caption(
-        "Mỗi điểm đại diện cho một khách hàng. Kích thước điểm phản ánh Total Sales."
+        "Each point represents a customer. The size of the point reflects Total Sales."
     )
 
     st.subheader("Pareto: Customer Profit Concentration")
@@ -539,8 +536,8 @@ elif page == "Customer Segmentation":
     st.line_chart(pareto_chart)
 
     st.caption(
-        "Kết quả Pareto mô tả mức độ tập trung lợi nhuận trong mẫu dữ liệu; "
-        "không nên diễn giải như một quy luật 80/20 phổ quát."
+        "The Pareto result describes the concentration of profits within a data sample;"
+        "it should not be interpreted as a universal 80/20 rule."
     )
 
 # ============================================================
@@ -550,14 +547,14 @@ elif page == "Profit Simulator":
 
     st.header("4. Profit Prediction Simulator")
     st.write(
-        "Nhập một kịch bản giao dịch để mô hình Random Forest ước tính Profit. "
-        "Công cụ này phục vụ phân tích what-if và hỗ trợ quyết định."
+        "Input a trading scenario for the Random Forest model to estimate profit. "
+        "This tool facilitates what-if analysis and supports decision-making."
     )
 
     st.warning(
-        "⚠️ Đây là dự báo của mô hình, không phải tác động nhân quả của Discount. "
-        "Đặc biệt, Sales là một biến đầu vào của mô hình nên kết quả phù hợp "
-        "với scenario analysis hơn là mô phỏng lợi nhuận trước giao dịch."
+        "⚠️ This is a model forecast, not the causal impact of the discount. "
+        "Specially, since Sales is an input variable "
+        "the results align better with scenario analysis than with a simulation of pre-transaction profits"
     )
 
     col1, col2 = st.columns(2)
@@ -744,9 +741,9 @@ elif page == "Profit Simulator":
     )
 
     st.caption(
-        "Các mức Discount trong bảng được đưa vào cùng một scenario với "
-        "Sales, Quantity và các thuộc tính khác giữ nguyên. Kết quả là "
-        "model-based estimate, không phải bằng chứng về tác động nhân quả."
+        "The discount levels in the table are incorporated into the same scenario "
+        "with Sales, Quantity and other attributes held constant. The result is a "
+        "model-based estimate, not evidence of a casual effect."
     )
 
 # ============================================================
@@ -756,9 +753,8 @@ elif page == "Model Performance":
 
     st.header("5. Model Performance")
     st.write(
-        "Trang này kiểm tra mô hình có dự báo Profit tốt hơn baseline hay không "
-        "và biến nào đóng góp nhiều vào dự báo."
-    )
+        "This page evaluates whether the model predicts Profit better than the baseline and identifies which variables contribute most to the prediction. "
+            )
 
     c1, c2, c3, c4 = st.columns(4)
 
@@ -783,8 +779,8 @@ elif page == "Model Performance":
     )
 
     st.caption(
-        "Nếu các điểm nằm gần đường chéo Actual = Predicted thì dự báo bám "
-        "sát giá trị thực tế hơn. Biểu đồ trên được dùng để đánh giá trực quan."
+        "If the data points lie close to the "Actual = Predicted" diagonal line"
+        "the forecasts align more closely with the actual values. The chart above is used for visual assessment."
     )
 
     st.subheader("Feature Importance")
@@ -804,8 +800,8 @@ elif page == "Model Performance":
     )
 
     st.info(
-        "Feature Importance phản ánh mức đóng góp của biến vào dự báo của "
-        "Random Forest, không phải phần trăm tác động nhân quả lên Profit."
+        "Feature Importance reflects the contribution of a variable to the Random Forest's predictions "
+        "not the percentage of causal impact on Profit."
     )
 
 # ============================================================
@@ -813,6 +809,6 @@ elif page == "Model Performance":
 # ============================================================
 st.divider()
 st.caption(
-    "E-Commerce Profit Decision Dashboard | Built with Streamlit, Pandas "
-    "and Scikit-learn"
+    "GVHD: TS. Nguyễn Thôn Dã | HV: Huỳnh Trúc Ngân "
+    "MSHV: C25611251"
 )
