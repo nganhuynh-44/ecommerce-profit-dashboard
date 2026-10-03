@@ -385,7 +385,7 @@ elif page == "Discount Analysis":
     ].iloc[0]
 
     if high_discount["Profit"] < 0:
-    st.markdown(
+        st.markdown(
         f"""
         <div style="
             background-color: #fffde7;
