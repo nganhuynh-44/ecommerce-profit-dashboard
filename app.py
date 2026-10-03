@@ -386,10 +386,10 @@ elif page == "Discount Analysis":
 
     if high_discount["Profit"] < 0:
         st.warning(
-            f"Discount exceeding >30% generated Sales of {money(high_discount['Sales'])} but "
-            resulted in a negative profit of  f"{money(high_discount['Profit'])}, with Profit Margin "
-            f"{pct(high_discount['Profit Margin'])}. "
-            "This is a critical factor to monitor when formulating discount policies."
+            f"Discount exceeding 30% generated Sales of {money(high_discount['Sales'])}, but "
+    f"Profit was negative at {money(high_discount['Profit'])}, with a Profit Margin "
+    f"of {pct(high_discount['Profit Margin'])}. "
+    "This is a signal to review discount policies carefully."
         )
 
     corr_discount_profit = order_df["Avg_Discount"].corr(
