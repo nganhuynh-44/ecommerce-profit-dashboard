@@ -387,7 +387,7 @@ elif page == "Discount Analysis":
     if high_discount["Profit"] < 0:
         st.warning(
             f"Discount exceeding >30% generated Sales of {money(high_discount['Sales'])} but "
-            f"resulted in a negative profit of  {money(high_discount['Profit'])}, with Profit Margin "
+            resulted in a negative profit of  f"{money(high_discount['Profit'])}, with Profit Margin "
             f"{pct(high_discount['Profit Margin'])}. "
             "This is a critical factor to monitor when formulating discount policies."
         )
@@ -809,6 +809,5 @@ elif page == "Model Performance":
 # ============================================================
 st.divider()
 st.caption(
-    "GVHD: TS. Nguyễn Thôn Dã | HV: Huỳnh Trúc Ngân "
-    "MSHV: C25611251"
+    "GVHD: TS. Nguyễn Thôn Dã | HV: Huỳnh Trúc Ngân | MSHV: C25611251"
 )
