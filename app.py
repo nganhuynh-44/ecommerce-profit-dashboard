@@ -779,7 +779,7 @@ elif page == "Model Performance":
     )
 
     st.caption(
-        "If the data points lie close to the "Actual = Predicted" diagonal line"
+        "If the data points lie close to the 'Actual = Predicted' diagonal line"
         "the forecasts align more closely with the actual values. The chart above is used for visual assessment."
     )
 
