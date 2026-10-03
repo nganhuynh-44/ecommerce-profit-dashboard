@@ -385,12 +385,25 @@ elif page == "Discount Analysis":
     ].iloc[0]
 
     if high_discount["Profit"] < 0:
-        st.warning(
-            f"Discount exceeding 30% generated Sales of {money(high_discount['Sales'])}, but "
-    f"Profit was negative at {money(high_discount['Profit'])}, with a Profit Margin "
-    f"of {pct(high_discount['Profit Margin'])}. "
-    "This is a signal to review discount policies carefully."
-        )
+    st.markdown(
+        f"""
+        <div style="
+            background-color: #fffde7;
+            color: #8a6500;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.6;
+        ">
+            Discount exceeding 30% generated Sales of
+            {money(high_discount['Sales'])}, but Profit was negative at
+            {money(high_discount['Profit'])}, with a Profit Margin of
+            {pct(high_discount['Profit Margin'])}.
+            This is a signal to review discount policies carefully.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     corr_discount_profit = order_df["Avg_Discount"].corr(
         order_df["Order_Profit"]
